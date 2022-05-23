@@ -1,6 +1,6 @@
 package gini.ohadsa.may23
 
-class Hand (var cards : MutableList<Card>? = null ){
+class Hand (private var cards : MutableList<Card>? = null ){
 
 
     fun addCard(card : Card){
@@ -32,14 +32,15 @@ class Hand (var cards : MutableList<Card>? = null ){
     }
 
 
-    fun getStrOfCards(): CharSequence? {
-        var str = StringBuffer()
+    fun getStrOfCards(): String {
+        val str = StringBuffer()
         if(cards != null ) {
             for (card in cards!!){
-                str.append(card.rank).append(", ")
+                str.append(card.rank).append(card.suits.value).append("   ")
             }
         }
-        return str
+
+        return str.substring(0,str.length-3).toString()
     }
 
 }

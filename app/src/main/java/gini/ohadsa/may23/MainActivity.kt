@@ -10,7 +10,7 @@ import gini.ohadsa.may23.databinding.ActivityMainBinding
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding : ActivityMainBinding
-    private var game = Game()
+    private lateinit var game : Game
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,38 +20,28 @@ class MainActivity : AppCompatActivity() {
         initClickListeners()
     }
 
-    private fun initClickListeners() {
 
+
+    private fun initClickListeners() {
         binding.play.setOnClickListener{
-            if(!game.isGameInProgress) {
-                game = Game()
-                binding.standButton.visibility = View.VISIBLE
-                binding.hitButton.visibility = View.VISIBLE
-            }
-            binding.play.visibility = View.GONE
+            initGameViews()
             showGame()
         }
-
         binding.hitButton.setOnClickListener{
             game.hit()
             showGame()
         }
 
-
         binding.standButton.setOnClickListener{
             game.stand()
             showGame()
-
         }
-
     }
-
-
-
 
 
     @SuppressLint("SetTextI18n")
     private fun showGame() {
+
         if(!game.isGameInProgress){
             binding.standButton.visibility = View.GONE
             binding.hitButton.visibility = View.GONE
@@ -62,8 +52,19 @@ class MainActivity : AppCompatActivity() {
         binding.tvDealerScore.text = game.dealerHand.getValue().toString()
         binding.tvPlayerScore.text = game.playerHand.getValue().toString()
         binding.tvWinner.text = "Winner : ${game.winner.name}"
+        if (game.iSBlackJack)
+            binding.tvWinner.text = "⭐  B-L-A-C-K-J-A-C-K ⭐ "
 
-        if (!game.isGameInProgress) binding.hitButton.visibility = View.GONE
+
     }
 
+
+    private fun initGameViews() {
+        game = Game()
+
+        binding.standButton.visibility = View.VISIBLE
+        binding.hitButton.visibility = View.VISIBLE
+        binding.play.visibility = View.GONE
+
+    }
 }

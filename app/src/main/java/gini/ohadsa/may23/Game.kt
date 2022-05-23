@@ -1,8 +1,9 @@
 package gini.ohadsa.may23
 
-class Game(val mDeck : Deck = Deck(), val  playerHand : Hand = Hand(), val dealerHand : Hand = Hand(), var  isGameInProgress : Boolean = true, var  iSBlackJack : Boolean = false, var winner : Winner = Winner.NOT_DETER_YET) {
+class Game(private val mDeck : Deck = Deck(), val  playerHand : Hand = Hand(), val dealerHand : Hand = Hand(), var  isGameInProgress : Boolean = true, var  iSBlackJack : Boolean = false, var winner : Winner = Winner.SOON) {
 
-    enum class Winner { PLAYER, DEALER, TIE, NOT_DETER_YET }
+
+    enum class Winner { PLAYER, DEALER, TIE, SOON }
     init{
         playerHand.addCard(mDeck.dealCard())
         dealerHand.addCard(mDeck.dealCard())
@@ -27,8 +28,9 @@ class Game(val mDeck : Deck = Deck(), val  playerHand : Hand = Hand(), val deale
     }
 
     fun stand() {
-       while(dealerHand.getValue() < 17 )
+       while(dealerHand.getValue() < 17 ) {
            dealerHand.addCard(mDeck.dealCard())
+       }
 
         when{
             dealerHand.getValue() > BlackJack && playerHand.getValue() > BlackJack -> winner = Winner.TIE
