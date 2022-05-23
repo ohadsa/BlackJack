@@ -28,7 +28,7 @@ class MainActivity : AppCompatActivity() {
                 binding.standButton.visibility = View.VISIBLE
                 binding.hitButton.visibility = View.VISIBLE
             }
-
+            binding.play.visibility = View.GONE
             showGame()
         }
 
@@ -41,8 +41,9 @@ class MainActivity : AppCompatActivity() {
         binding.standButton.setOnClickListener{
             game.stand()
             showGame()
+
         }
-        
+
     }
 
 
@@ -54,6 +55,7 @@ class MainActivity : AppCompatActivity() {
         if(!game.isGameInProgress){
             binding.standButton.visibility = View.GONE
             binding.hitButton.visibility = View.GONE
+            binding.play.visibility = View.VISIBLE
         }
         binding.tvPlayer.text = game.playerHand.getStrOfCards()
         binding.tvDealer.text = game.dealerHand.getStrOfCards()
